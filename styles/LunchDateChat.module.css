@@ -1,0 +1,10 @@
+.container {
+  --vh: 1vh;
+  height: calc(calc(var(--vh) * 100) - 10.5rem);
+}
+
+@media (max-width: 640px) {
+  .container {
+    height: calc(calc(var(--vh) * 100) - 17rem);
+  }
+}

@@ -1,0 +1,133 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["filteredRelationCount"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id         Int               @id @default(autoincrement())
+  name       String
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  externalId Int?
+  menus      RestaurantMenu[]
+  queues     RestaurantQueue[]
+  lunchDates LunchDate[]
+}
+
+model RestaurantMenu {
+  id           Int        @id @default(autoincrement())
+  menu         Json?
+  menuDate     String
+  restaurantId Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@index([restaurantId], map: "RestaurantMenu_restaurantId_fkey")
+}
+
+model RestaurantQueue {
+  id           Int        @id @default(autoincrement())
+  comment      String
+  queueTime    Decimal    @default(0.00) @db.Decimal(10, 2)
+  restaurantId Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@index([restaurantId], map: "RestaurantQueue_restaurantId_fkey")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  username       String?   @unique
+  email          String?   @unique
+  emailVerified  DateTime?
+  passwordDigest String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  image          String?
+
+  // @@unique([email, provider])
+  Account Account[]
+  Session Session[]
+
+  lunchDates LunchDate[]
+  chats      Chat[]
+  userGroups UserGroup[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model UserGroup {
+  id         String @id @default(cuid())
+  name       String
+  externalId String @unique
+
+  users      User[]
+  lunchDates LunchDate[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LunchDate {
+  id       String   @id @default(cuid())
+  date     DateTime
+  comments String?
+
+  users      User[]
+  chats      Chat[]
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  UserGroup    UserGroup @relation(fields: [userGroupId], references: [id])
+  userGroupId  String
+  restaurantId Int
+}
+
+model Chat {
+  id      String @id @default(cuid())
+  content String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  LunchDate   LunchDate @relation(fields: [lunchDateId], references: [id])
+  lunchDateId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}

@@ -1,0 +1,44 @@
+{
+  "index": {
+    "smartq": "SmartQ",
+    "next_lunchdates": "Next lunchdates",
+    "no_lunchdates": "You have no lunchdates in the near future",
+    "menu_queue": "Menu & Queue",
+    "sorting_and_selection_in_next": "Sorting and selection in next release",
+    "no_recent_data": "No recent data :(",
+    "menu_data_not_available": "Menu data not available"
+  },
+  "profile": {
+    "name": "Name",
+    "username": "Username",
+    "email": "Email",
+    "more_customization_coming_soon": "More customization coming soon..",
+    "no_picture": "You have no picture",
+    "profile_pic_alt": "My profile pic",
+    "logout": "Getto ass logout button"
+  },
+  "chat": {
+    "new_message": "New message"
+  },
+  "lunch_dates": {
+    "lunch_dates": "Lunch Dates",
+    "create_new": {
+      "title": "Create a new group",
+      "group_name": "Group name",
+      "group_name_placeholder": "Our group name",
+      "login_code": "Login code",
+      "login_code_placeholder": "ABCDEFGHIJ",
+      "create": "Create"
+    },
+    "join_existing": {
+      "title": "Join an existing group",
+      "login_code": "Login code",
+      "login_code_placeholder": "ABCDEFGHIJ",
+      "join": "Join"
+    }
+  },
+  "user_group": {
+    "open": "Open",
+    "join": "Join"
+  }
+}

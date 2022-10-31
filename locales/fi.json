@@ -1,0 +1,44 @@
+{
+  "index": {
+    "smartq": "SmartQ",
+    "next_lunchdates": "Seuraavat lounasdeitit",
+    "no_lunchdates": "Sinulla ei ole tulevia lounasdeittejä",
+    "menu_queue": "Menu & Jono",
+    "sorting_and_selection_in_next": "Järjestäminen ja valikointi seuraavassa julkasisussa",
+    "no_recent_data": "Ei tuoretta dataa :(",
+    "menu_data_not_available": "Menu dataa ei saatavilla"
+  },
+  "profile": {
+    "name": "Nimi",
+    "username": "Käyttäjänimi",
+    "email": "Sähköposti",
+    "more_customization_coming_soon": "Lisää kustomointia tulossa..",
+    "no_picture": "Sinulla ei ole kuvaa",
+    "profile_pic_alt": "Minun profiilikuva",
+    "logout": "Getto ass kirjaudu ulos"
+  },
+  "chat": {
+    "new_message": "Uusi viesti"
+  },
+  "lunch_dates": {
+    "lunch_dates": "Lounasdeitit",
+    "create_new": {
+      "title": "Luo uusi ryhmä",
+      "group_name": "Ryhmän nimi",
+      "group_name_placeholder": "Meidän nimi",
+      "login_code": "Kirjautumistunnus",
+      "login_code_placeholder": "ABCDEFGHIJ",
+      "create": "Luo"
+    },
+    "join_existing": {
+      "title": "Liity ryhmään",
+      "login_code": "Kirjautumistunnus",
+      "login_code_placeholder": "ABCDEFGHIJ",
+      "join": "Liity"
+    }
+  },
+  "user_group": {
+    "open": "Avaa",
+    "join": "Liity"
+  }
+}

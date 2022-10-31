@@ -1,0 +1,33 @@
+
+.customSlider {
+  max-width: 300px;
+  margin: auto;
+}
+
+.customSlider-track {
+  top: 9.5px;
+  height: 4px;
+  background: #AAA;
+}
+
+
+.customSlider-track-0 {
+  top: 9.5px;
+  height: 4px;
+  background: #777;
+}
+
+.customSlider-thumb {
+  cursor: pointer;
+  background: limegreen;
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+  outline: none;
+  line-height: 22px;
+  text-align: center;
+}
+
+.customSlider-thumb:hover, .customSlider-thumb:active {
+  box-shadow: 0 0 6px 1px #333;
+}
