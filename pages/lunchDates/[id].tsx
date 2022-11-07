@@ -6,9 +6,10 @@ import { KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import Layout from "../../components/Layout";
 import { formatRelative } from "date-fns";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import styles from '../../styles/LunchDateChat.module.css';
 import { useTranslations } from "next-intl";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
 type LunchDateProp = LunchDate & {
   users: User[];
@@ -71,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const LunchDate: React.FC<{ lunchDateProps: LunchDateProp, user: User }> = ({
   lunchDateProps, user
 }) => {
+  const socket = useRef<Socket<DefaultEventsMap, DefaultEventsMap>>();
   const bottomRef = useRef(null);
   const [lunchDate, setLunchDate] = useState(lunchDateProps);
   const [newMessage, setNewMessage] = useState("");
@@ -111,29 +113,38 @@ const LunchDate: React.FC<{ lunchDateProps: LunchDateProp, user: User }> = ({
   const handleMessageSend = async () => {
     if (newMessage.length === 0) { return; }
 
-    await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        lunchDateId: lunchDate.id,
-        content: newMessage
-      })
-    })
+    if (!socket.current) { return; }
+
+    socket.current.emit("send-message", {
+      content: newMessage,
+      lunchDateId: lunchDate.id,
+    });
+
+    // await fetch("/api/chat", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     lunchDateId: lunchDate.id,
+    //     content: newMessage
+    //   })
+    // })
 
     setNewMessage("");
   }
 
   const initializeSocket = async () => {
     await fetch("/api/socket")
-    const socket = io();
+    socket.current = io({ transports: ['websocket'] });
 
-    socket.on("connect", () => {
+    socket.current.auth = { id: user.id }
+
+    socket.current.on("connect", () => {
       console.log("socket connected")
     });
 
-    socket.on("message", msg => {
+    socket.current.on("message", msg => {
       console.log(msg);
       setLunchDate(current => {
         return { ...current, chats: current.chats.concat(msg) }
