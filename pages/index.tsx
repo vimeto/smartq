@@ -200,7 +200,7 @@ const LunchDate: React.FC<{ lunchDate: LunchDateProp, modalOpen: boolean }> = ({
 
   return (
     <div
-      style={{ zIndex: modalOpen ? -1 : 'auto' }}
+      style={{ zIndex: modalOpen ? -1 : 'auto', maxWidth: '200px' }}
       onClick={() => onLunchDateClick()}
       className="bg-white m-2 p-2 pb-5 shadow border rounded-lg relative cursor-pointer"
       >
@@ -286,7 +286,7 @@ const Home: React.FC<{
         <div><h1 className="text-center mb-4 mt-6 text-5xl">{t('smartq')}</h1></div>
         <div>
           <h1 className="text-center text-3xl py-2">{t('next_lunchdates')}</h1>
-          <div className="flex flex-row justify-center max-w-screen-md mx-auto">
+          <div className="flex flex-row flex-wrap justify-center max-w-screen-md mx-auto">
             {
               lunchDateProps?.length > 0 ? (
                 lunchDateProps.map((ld) => (
