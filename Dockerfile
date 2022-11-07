@@ -22,7 +22,7 @@ COPY . .
 COPY package*.json ./
 # COPY package-lock.json* .
 RUN npm ci
-RUN ls -al
+# RUN ls -al
 
 ENV NODE_ENV production
 
