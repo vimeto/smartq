@@ -1,9 +1,9 @@
 import type { User } from "@prisma/client";
 import { unstable_getServerSession } from "next-auth";
 import { Server } from "socket.io";
-import { createAdapter } from "@socket.io/redis-adapter";
+// import { createAdapter } from "@socket.io/redis-adapter";
 // import { createClient } from "redis";
-import Redis from "ioredis";
+// import Redis from "ioredis";
 
 import prisma from "../../lib/prisma";
 import { options } from "./auth/[...nextauth]";
@@ -28,11 +28,11 @@ const SocketHandler = async (req, res) => {
   res.socket.server.io = io;
 
   // const pubClient = createClient({ url: "rediss://default:AVNS_oRlfF0YPS_kE9OmedMx@redis-3ca2d098-vilhelm-7f26.aivencloud.com:27355" });
-  const pubClient = new Redis("rediss://default:AVNS_oRlfF0YPS_kE9OmedMx@redis-3ca2d098-vilhelm-7f26.aivencloud.com:27355");
-  const subClient = pubClient.duplicate();
+  // const pubClient = new Redis("rediss://default:AVNS_oRlfF0YPS_kE9OmedMx@redis-3ca2d098-vilhelm-7f26.aivencloud.com:27355");
+  // const subClient = pubClient.duplicate();
 
-  io.adapter(createAdapter(pubClient, subClient));
-  console.log("adapter connected")
+  // io.adapter(createAdapter(pubClient, subClient));
+  // console.log("adapter connected")
 
   io.use((socket, next) => {
     const id = socket.handshake.auth.id;
@@ -45,40 +45,12 @@ const SocketHandler = async (req, res) => {
     next();
   });
 
-  // io.use(async (socket, next) => {
-  //   // const session = await unstable_getServerSession(req, res, options);
-  //   if (!session?.user) {
-  //     console.log("here")
-  //     next(new Error("you are not authenticated")); return;
-  //   }
-
-  //   socket.data = await prisma.user.findUnique({
-  //     where: {
-  //       email: session.user.email
-  //     },
-  //     include: {
-  //       chatRooms: {
-  //         include: {
-  //           users: true
-  //         }
-  //       }
-  //     }
-  //   });
-  //   // socket.user = session?.user;
-  // })
 
   io.on('connection', async (socket) => {
-    // socket.data = await prisma.user.findUnique({
-    //   where: {
-    //     email: session.user.email
-    //   },
-    // });
 
     socket.join(socket.data.userId);
 
     socket.on("send-message", async (msg) => {
-      console.log(socket.data);
-      console.log(msg)
       const possibleChatRoom  = await prisma.lunchDate.findUnique({
         where: {
           id: msg.lunchDateId
@@ -87,10 +59,6 @@ const SocketHandler = async (req, res) => {
           users: true
         }
       });
-      // const possibleChatRoom = (
-      //   socket.data as
-      //     User & {chatRooms: (ChatRoom & { users: User[] })[]}
-      // ).chatRooms.find((cr) => cr.id === msg.chatRoomId)
 
       if (possibleChatRoom) {
         const newChat = await prisma.chat.create({

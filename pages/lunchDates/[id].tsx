@@ -155,7 +155,7 @@ const LunchDate: React.FC<{ lunchDateProps: LunchDateProp, user: User }> = ({
   return (
     <Layout>
       <div className="w-screen">
-        <div className={`z-10 fixed bottom-16 px-2 py-2 w-full flex justify-between bg-gray-200`}>
+        <div className={`z-10 fixed bottom-16 px-2 py-2 h-16 w-full flex justify-between bg-gray-200`}>
           <input
             id="new-message-input"
             value={newMessage}
@@ -180,7 +180,7 @@ const LunchDate: React.FC<{ lunchDateProps: LunchDateProp, user: User }> = ({
             {/* { lunchDate?.date ? formatRelative(new Date(lunchDate?.date), new Date()) : '' } */}
             {/* `${lunchDate?.restaurant.name} on: ${formatRelative(new Date(lunchDate?.date), new Date())}`} */}
         </div>
-        <div className={`fixed w-screen overflow-x-scroll top-12 ${styles.container}`}>
+        <div className={`fixed w-screen overflow-x-scroll bottom-32 h-screen ${styles.container}`}>
           <div className="px-2 pt-4">
             {
               lunchDate?.chats.map((chat) => (
