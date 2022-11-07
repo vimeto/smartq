@@ -2,6 +2,7 @@ import { User } from ".prisma/client";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import Router from "next/router";
 import React from "react";
 
 import Layout from "../Layout";
@@ -12,6 +13,23 @@ interface ProfilePageProps {
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ user }) => {
   const t = useTranslations('profile');
+
+  const onClickLive = async () => {
+    const res = await fetch(
+      "/api/user/toggleLive",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ showLive: !user.showLive })
+      }
+    );
+
+    if (res.status === 200) {
+      Router.push("/profile");
+    }
+  }
 
 
   return (
@@ -44,6 +62,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user }) => {
         <div className="mt-4">
           <p>{t("more_customization_coming_soon")}</p>
         </div>
+        <button
+          className="px-2 py-2 rounded bg-blue-300 mt-4"
+          onClick={() => onClickLive()}
+          >
+          <p>{user.showLive ? "Don't show live" : "Show live"}</p>
+        </button>
 
         <button
           className="px-4 py-2 rounded bg-red-300 mt-4"

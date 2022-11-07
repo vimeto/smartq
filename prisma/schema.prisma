@@ -61,6 +61,7 @@ model User {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   image          String?
+  showLive       Boolean   @default(false)
 
   // @@unique([email, provider])
   Account Account[]
