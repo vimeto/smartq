@@ -52,7 +52,7 @@ const Group: React.FC<GroupProps> = ({ group, restaurants, handleCreateNewLunchD
   }
 
   return (
-    <div className="rounded border m-2 py-2 px-4">
+    <div className="rounded-3xl shadow bg-white m-2 py-2 px-4">
       <div className="flex flex-row items-center justify-between">
         <div>
           <p className="cursor-pointer text-xl pl-2 pt-2">{group.name}</p>
@@ -89,7 +89,7 @@ const Group: React.FC<GroupProps> = ({ group, restaurants, handleCreateNewLunchD
         </div>
         <div className="mx-auto text-center">
           <button
-            className="px-4 py-2 m-2 bg-green-200 rounded-lg hover:bg-green-300"
+            className="px-4 py-2 m-2 bg-emerald-200 rounded-full hover:bg-emerald-300"
             onClick={() => handleCreateNewLunchDate(newLunchDateState.date, newLunchDateState.restaurant, group.id)}
             >Create lunch date</button>
         </div>
@@ -106,7 +106,7 @@ const Group: React.FC<GroupProps> = ({ group, restaurants, handleCreateNewLunchD
                   {lunchDate._count.users}
                   <FaUser />
                   <button
-                    className={`px-2 py-1 ${lunchDate.userJoined ? 'bg-blue-100' : 'bg-green-200'} rounded-lg mt-1`}
+                    className={`px-3 py-1 ${lunchDate.userJoined ? 'bg-cyan-200' : 'bg-emerald-200'} rounded-full mt-1`}
                     onClick={() => handleOpenChat(lunchDate)}
                     >
                       {lunchDate.userJoined ? t('open') : t('join')}

@@ -33,19 +33,19 @@ const LunchDatePage: React.FC<{
         <div className="max-w-screen-md mx-auto">
           <div className="m-2 flex flex-row gap-2">
             <div
-              className={`bg-green-${selectedCreateJoinTab === 1 ? '300' : '200'} hover:bg-green-300 text-center w-6/12 rounded border py-2 px-4 cursor-pointer flex items-center justify-center`}
+              className={`shadow-lg bg-gradient-to-r from-emerald-200 to-emerald-300 hover:from-emerald-300 hover:to-emerald-400 text-center w-6/12 rounded-full py-2 px-4 cursor-pointer flex items-center justify-center`}
               onClick={() => {setSelectedCreateJoinTab(selectedCreateJoinTab === 1 ? null : 1)}}
               >
               {t("create_new.title")}
             </div>
             <div
-              className={`bg-gray-${selectedCreateJoinTab === 2 ? '300' : '200'} hover:bg-gray-300 text-center w-6/12 rounded border py-2 px-4 inline-block`}
+              className={`shadow-lg bg-gradient-to-r from-stone-50 to-stone-100 hover:from-stone-100 hover:to-stone-200 text-center w-6/12 rounded-full py-2 px-4 inline-block`}
               onClick={() => {setSelectedCreateJoinTab(selectedCreateJoinTab === 2 ? null : 2)}}
               >
               {t("join_existing.title")}
             </div>
           </div>
-          <div className={`m-2 border p-6 flex flex-row justify-between items-end ${selectedCreateJoinTab === 2 ? 'block' : 'hidden'}`}>
+          <div className={`m-2 shadow rounded-3xl p-6 flex flex-row justify-between items-end ${selectedCreateJoinTab === 2 ? 'block' : 'hidden'}`}>
             <div>
               <p className="text-xl mb-4 pl-1">
                 {t('join_existing.login_code')}
@@ -66,7 +66,7 @@ const LunchDatePage: React.FC<{
             </div>
             <div>
               <button
-                className={`py-2 px-6 bg-green-300 rounded ${!joinExistingGroupState.id && 'opacity-30'}`}
+                className={`shadow-sm bg-stone-200 rounded-full py-2 px-6 ${!joinExistingGroupState.id ? 'opacity-30' : 'hover:bg-stone-300'}`}
                 disabled={!joinExistingGroupState.id}
                 onClick={joinNewUserGroup}
                 >
@@ -74,7 +74,7 @@ const LunchDatePage: React.FC<{
                 </button>
             </div>
           </div>
-          <div className={`m-2 border p-6 flex flex-row justify-between items-end ${selectedCreateJoinTab === 1 ? 'block' : 'hidden'}`}>
+          <div className={`m-2 shadow rounded-3xl bg-white p-6 flex flex-row justify-between items-end ${selectedCreateJoinTab === 1 ? 'block' : 'hidden'}`}>
             <div>
               <div>
                 <p className="text-xl mb-4 pl-1">
@@ -107,7 +107,7 @@ const LunchDatePage: React.FC<{
             </div>
             <div>
               <button
-                className={`py-2 px-6 bg-green-300 rounded ${(createNewGroupState.id || createNewGroupState.externalId.length !== 8) && 'opacity-30'}`}
+                className={`py-2 px-6 bg-emerald-200 rounded-full ${(createNewGroupState.id || createNewGroupState.externalId.length !== 8) ? 'opacity-30' : 'hover:bg-emerald-300'}`}
                 disabled={!(createNewGroupState.id || createNewGroupState.externalId.length === 8)}
                 onClick={createNewUserGroup}
                 >

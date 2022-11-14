@@ -1,9 +1,9 @@
 {
   "index": {
     "smartq": "SmartQ",
-    "next_lunchdates": "Seuraavat lounasdeitit",
+    "next_lunchdates": "Lounasdeitit",
     "no_lunchdates": "Sinulla ei ole tulevia lounasdeittejä",
-    "menu_queue": "Menu & Jono",
+    "menu_queue": "Ravintolat",
     "sorting_and_selection_in_next": "Järjestäminen ja valikointi seuraavassa julkasisussa",
     "no_recent_data": "Ei tuoretta dataa :(",
     "menu_data_not_available": "Menu dataa ei saatavilla"

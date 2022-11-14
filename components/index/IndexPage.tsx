@@ -18,7 +18,10 @@ const IndexPage: React.FC<{
   const [modalRestaurant, setModalRestaurant] = useState<{ name: string, id: number } | null>(null);
   const t = useTranslations('index');
 
-  useEffect(() => { setRestaurants(restaurantProps) }, [restaurantProps])
+  useEffect(() => {
+    setRestaurants(restaurantProps);
+    setOpenRestaurantIds(restaurantProps.map(r => r.id));
+  }, [restaurantProps])
 
   const toggleMenuOpen = (id: number) => {
     const idIndex = openRestaurantIds.indexOf(id)
@@ -69,9 +72,8 @@ const IndexPage: React.FC<{
     <Layout>
       <Modal open={modalOpen} restaurantName={modalRestaurant?.name} handleClose={() => setModalOpen(false)} handleQueueUpdate={handleQueueUpdate} />
       <div className="page pb-16">
-        <div><h1 className="text-center mb-4 mt-6 text-5xl">{t('smartq')}</h1></div>
         <div>
-          <h1 className="text-center text-3xl py-2">{t('next_lunchdates')}</h1>
+          <h1 className="text-center text-4xl py-2">{t('next_lunchdates')}</h1>
           <div className="flex flex-row flex-wrap justify-center max-w-screen-md mx-auto">
             {
               lunchDateProps?.length > 0 ? (
@@ -85,8 +87,7 @@ const IndexPage: React.FC<{
           </div>
         </div>
         <div className="max-w-screen-md mx-auto">
-          <h1 className="text-center text-3xl py-2">{t('menu_queue')}</h1>
-          <p className="text-center py-2">{t('sorting_and_selection_in_next')}</p>
+          <h1 className="text-center text-4xl py-2">{t('menu_queue')}</h1>
           {
             restaurants?.length > 0 && restaurants.map((p) => {
               return (
