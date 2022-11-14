@@ -13,9 +13,12 @@ export const lunchDateServerSideProps: GetServerSideProps = async (ctx) => {
         permanent: false,
         destination: "/login ",
       },
-      props:{},
+      props: {},
     };
   }
+
+  const today = new Date();
+  today.setHours(today.getHours() - 1);
 
   const userGroups = await prisma.userGroup.findMany({
     where: {
@@ -29,6 +32,11 @@ export const lunchDateServerSideProps: GetServerSideProps = async (ctx) => {
     },
     include: {
       lunchDates: {
+        where: {
+          date: {
+            gte: today
+          }
+        },
         include: {
           restaurant: true,
           _count: {
@@ -66,7 +74,7 @@ export const lunchDateServerSideProps: GetServerSideProps = async (ctx) => {
         id: number,
         name: string,
       },
-  })[];
+    })[];
 
     const aaa = { ...userGroup };
     userGroup.lunchDates.forEach((ld) => {

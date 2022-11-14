@@ -77,7 +77,7 @@ const useLunchDates = (initialUserGroups: UserGroupsWithLunchDate[], initialRest
         if (current.find(oldusergroup => oldusergroup.id === body.userGroup.id)) {
           return current.map(oldusergroup => oldusergroup.id === body.userGroup.id ? body.userGroup : oldusergroup);
         } else {
-          return current.concat(body.userGroup);
+          return [body.userGroup, ...current]; // current.concat(body.userGroup);
         }
       });
     }
@@ -105,7 +105,7 @@ const useLunchDates = (initialUserGroups: UserGroupsWithLunchDate[], initialRest
         if (current.find(oldusergroup => oldusergroup.id === body.userGroup.id)) {
           return current.map(oldusergroup => oldusergroup.id === body.userGroup.id ? body.userGroup : oldusergroup);
         } else {
-          return current.concat(body.userGroup);
+          return [body.userGroup, ...current]; //current.concat(body.userGroup);
         }
       });
     }
@@ -133,7 +133,7 @@ const useLunchDates = (initialUserGroups: UserGroupsWithLunchDate[], initialRest
             ({ ...group, lunchDates: group.lunchDates.concat(body.lunchDate) })
             : group
         ))
-    )
+      )
     }
   }
 
