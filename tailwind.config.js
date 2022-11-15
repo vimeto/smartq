@@ -31,6 +31,10 @@ module.exports = {
           },
         }
       })
-    }
+    },
+    require("daisyui"),
   ],
+  daisyui: {
+    themes: false,
+  },
 }
