@@ -63,7 +63,8 @@ model User {
   image          String?
   showLive       Boolean   @default(false)
 
-  // @@unique([email, provider])
+  guildConfigured Boolean @default(false)
+
   Account Account[]
   Session Session[]
 
@@ -92,12 +93,19 @@ model Account {
 }
 
 model UserGroup {
-  id         String @id @default(cuid())
+  id         String  @id @default(cuid())
   name       String
-  externalId String @unique
+  externalId String? @unique
 
   users      User[]
   lunchDates LunchDate[]
+
+  // 0 - university, 1 - guild, 2 - other
+  category Int @default(2)
+
+  parentId String?
+  parent   UserGroup?  @relation("UserGroupAncestry", fields: [parentId], references: [id])
+  children UserGroup[] @relation("UserGroupAncestry")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

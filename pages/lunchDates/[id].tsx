@@ -53,7 +53,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       where: {
         email: session.user.email
       }
-    })
+    });
+
+    if (!me.guildConfigured) {
+      return {
+        redirect: {
+          permanent: true,
+          destination: "/guildStepper",
+        },
+        props: {},
+      };
+    }
 
     return {
       props: {

@@ -12,7 +12,7 @@ export const getProfileServerSideProps: GetServerSideProps = async (ctx) => {
         permanent: false,
         destination: "/login",
       },
-      props:{},
+      props: {},
     };
   }
 
@@ -21,6 +21,17 @@ export const getProfileServerSideProps: GetServerSideProps = async (ctx) => {
       email: session.user.email
     }
   });
+
+  if (!userFromDb.guildConfigured) {
+    return {
+      redirect: {
+        permanent: true,
+        destination: "/guildStepper",
+      },
+      props: {},
+    };
+  }
+
   return {
     props: {
       user: JSON.parse(JSON.stringify(userFromDb))
