@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const isActive = (pathname: string) => router.pathname === pathname;
   const { data: session, status } = useSession();
 
-  if (!session) {
+  if (!session || isActive("/guildStepper")) {
     return <></>;
   }
 
