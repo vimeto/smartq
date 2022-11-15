@@ -1,13 +1,17 @@
-import { LunchDate, Restaurant, UserGroup } from "@prisma/client";
+import { LunchDate, Restaurant, User, UserGroup } from "@prisma/client";
 
 type lunchDateWithCountAndUserGroup = (LunchDate & {
   restaurant: Restaurant,
   _count: {
-      users: number,
+    users: number,
   },
   UserGroup: UserGroup,
 });
 
+export type LunchDateWithCountAndUserGroupAndUserJoined = lunchDateWithCountAndUserGroup & { userJoined: boolean };
+
 export type {
   lunchDateWithCountAndUserGroup
 };
+
+export type UserWithUserGroups = User & { userGroups: UserGroup[] }
