@@ -49,16 +49,29 @@ export const lunchDateServerSideProps: GetServerSideProps = async (ctx) => {
     }
   });
 
-  const userLunchDateIds = (await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { email: session.user.email },
     select: {
+      guildConfigured: true,
       lunchDates: {
         select: {
           id: true
         }
       }
     }
-  })).lunchDates.map((lunchdate) => lunchdate.id);
+  });
+
+  if (!user.guildConfigured) {
+    return {
+      redirect: {
+        permanent: true,
+        destination: "/guildStepper",
+      },
+      props: {},
+    };
+  }
+
+  const userLunchDateIds = user.lunchDates.map((lunchdate) => lunchdate.id);
 
   const a = userGroups.map((userGroup) => {
     if (userGroup.lunchDates.length === 0) {

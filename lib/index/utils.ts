@@ -22,6 +22,16 @@ export const getIndexPageServerSideProps: GetServerSideProps = async (ctx) => {
     }
   });
 
+  if (!u.guildConfigured) {
+    return {
+      redirect: {
+        permanent: true,
+        destination: "/guildStepper",
+      },
+      props: {},
+    };
+  }
+
   if (u.showLive) {
     return {
       redirect: {
