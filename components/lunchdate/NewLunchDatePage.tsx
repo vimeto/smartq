@@ -150,15 +150,15 @@ const NewLunchDatePage: React.FC<{
   return (
     <Layout>
       <div className="w-full h-screen flex justify-center items-center">
-        <div className="p-2 rounded-3xl bg-white shadow">
-          <p className="p-2 my-2">Find Company for Lunching</p>
-          <div>
+        <div className="w-full mx-2 max-w-xs p-2 rounded-3xl bg-white shadow">
+          <p className="pb-2 my-2 text-xl text-center">Find Company for Lunching</p>
+          <div className="text-center">
             <MobileDatePicker
               label="Pick date"
               inputFormat="dd/MM/yyyy"
               value={value}
               onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => <TextField fullWidth {...params} />}
             />
           </div>
           {step === 2 && (
@@ -168,14 +168,16 @@ const NewLunchDatePage: React.FC<{
                   label="Time"
                   value={value}
                   minutesStep={5}
+                  ampm={false}
                   onChange={handleChange}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => <TextField fullWidth {...params} />}
                 />
               </div>
               <Autocomplete
                 disablePortal
                 id="select-user-group"
                 options={myUserGroups}
+                fullWidth
                 // sx={{ width: 300 }}
                 renderInput={(params) => <TextField {...params} label="Group" />}
                 value={groupValue}
@@ -186,6 +188,7 @@ const NewLunchDatePage: React.FC<{
                 disablePortal
                 id="select-restaurant"
                 options={ress()}
+                fullWidth
                 sx={{ marginTop: "8px" }}
                 renderInput={(params) => <TextField {...params} label="Restaurant" />}
                 value={restaurantValue}
