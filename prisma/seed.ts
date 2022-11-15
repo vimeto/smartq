@@ -2,17 +2,22 @@ import bcrypt from "bcryptjs";
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-const seedUsers = async () => {
+const seedRootUser = async () => {
   const salt = await bcrypt.genSalt(10);
 
-  const data = {
-    name: "Root User",
-    email: "root.user@gmail.com",
-    passwordDigest: await bcrypt.hash("password", salt),
-    isRoot: true
-  }
-
-  await prisma.user.create({ data })
+  await prisma.user.upsert({
+    where: {
+      email: "root.user@gmail.com",
+    },
+    update: {
+      name: "Root User"
+    },
+    create: {
+      name: "Root User",
+      email: "root.user@gmail.com",
+      passwordDigest: await bcrypt.hash("password", salt),
+    }
+  });
 }
 
 const seedRestaurants = async () => {
@@ -68,129 +73,40 @@ const seedRestaurants = async () => {
   }))
 }
 
-const seedUserGroups = async () => {
-  const users = await prisma.user.findMany();
-  const userids = users.map(u => ({ id: u.id }));
-
-  const userGroupAalto = await prisma.userGroup.create({
+const seedUniversityAndGuilds = async () => {
+  const aalto = await prisma.userGroup.create({
     data: {
-      name: "Aalto University",
-      externalId: "ABCDABCD",
-      users: {
-        connect: userids
-      }
+      name: "Aalto Yliopisto",
+      category: 0,
     }
   });
 
-  const userGroupFyysikkokilta = await prisma.userGroup.create({
-    data: {
-      name: "Fyysikkokilta",
-      externalId: "01234567",
-      users: {
-        connect: userids
-      }
-    }
-  });
+  const guilds = [
+    "Arkkitehtikilta",
+    "Automaatio- ja systeemitekniikan kilta",
+    "Inkubio",
+    "Fyysikkokilta",
+    "Athene",
+    "Koneinsinöörikilta",
+    "Maanmittarikilta",
+    "Prosessiteekkarit",
+    "Rakennusinsinöörikilta IK",
+    "Sähköinsinöörikilta",
+    "Tietokilta",
+    "Prodeko",
+    "Teknologföreningen",
+    "Kauppatieteiden ylioppilaat (KY)",
+  ];
 
-  await prisma.lunchDate.create({
-    data: {
-      date: new Date(2022, 9, 28, 11, 30),
-      restaurant: {
-        connect: {
-          id: 7
-        }
-      },
-      UserGroup: {
-        connect: {
-          id: userGroupAalto.id
-        }
+  Promise.all(guilds.map(async (guild) => {
+    await prisma.userGroup.create({
+      data: {
+        name: guild,
+        category: 1,
+        parentId: aalto.id
       }
-    }
-  })
-
-  await prisma.lunchDate.create({
-    data: {
-      date: new Date(2022, 9, 28, 17, 30),
-      restaurant: {
-        connect: {
-          id: 11
-        }
-      },
-      UserGroup: {
-        connect: {
-          id: userGroupAalto.id
-        }
-      }
-    }
-  })
-
-  await prisma.lunchDate.create({
-    data: {
-      date: new Date(2022, 9, 30, 17, 30),
-      restaurant: {
-        connect: {
-          id: 1
-        }
-      },
-      UserGroup: {
-        connect: {
-          id: userGroupAalto.id
-        }
-      }
-    }
-  })
-
-  await prisma.lunchDate.create({
-    data: {
-      date: new Date(2022, 9, 30, 10, 30),
-      restaurant: {
-        connect: {
-          id: 8
-        }
-      },
-      UserGroup: {
-        connect: {
-          id: userGroupFyysikkokilta.id
-        }
-      }
-    }
-  })
-}
-
-const seedUserGroupTest = async () => {
-  await prisma.userGroup.create({
-    data: {
-      name: "Testing group",
-      externalId: "AKAKAKAK",
-    }
-  });
-}
-
-const assignLunchDatesToUser = async () => {
-  await prisma.lunchDate.update({
-    where: {
-      id: "cl9pxdngc00048zb5qqfyvmag"
-    },
-    data: {
-      users: {
-        connect: {
-          email: "vilhelm.toivonen@trail.fi"
-        }
-      },
-    }
-  });
-  await prisma.lunchDate.update({
-    where: {
-      id: "cl9pxdnh900078zb5jr84e29j"
-    },
-    data: {
-      users: {
-        connect: {
-          email: "vilhelm.toivonen@trail.fi"
-        }
-      }
-    }
-  });
+    })
+  }));
 }
 
 // const seedMessages = async () => {
@@ -220,18 +136,18 @@ const assignLunchDatesToUser = async () => {
 //   })
 // }
 
-// const removeAll = async () => {
-//   await prisma.session.deleteMany();
-//   await prisma.restaurantMenu.deleteMany();
-//   await prisma.restaurantQueue.deleteMany();
-//   await prisma.restaurant.deleteMany();
-//   await prisma.user.deleteMany();
-// }
+const removeAll = async () => {
+  await prisma.session.deleteMany();
+  await prisma.chat.deleteMany();
+  await prisma.lunchDate.deleteMany();
+  await prisma.userGroup.deleteMany();
+}
 
 const seed = async () => {
-  // await removeAll();
-  // await seedUsers();
-  await seedRestaurants();
+  await removeAll();
+  await seedRootUser();
+  await seedUniversityAndGuilds();
+  // await seedRestaurants();
   // await seedUserGroups();
   // await seedUserGroupTest();
   // await assignLunchDatesToUser();
