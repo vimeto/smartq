@@ -100,7 +100,7 @@ const RestaurantItem: React.FC<{
     <AnimatePresence>
       <div className="rounded-3xl m-2 shadow bg-white">
         <div className="h-14 py-2 pr-2 pl-4 flex flex-row items-center justify-between">
-          <p className="cursor-pointer text-2xl" onClick={() => toggleMenuOpen(restaurant.id)}>{restaurant.name}</p>
+          <p className="cursor-pointer text-2xl select-none" onClick={() => toggleMenuOpen(restaurant.id)}>{restaurant.name}</p>
           <div className="cursor-pointer flex flex-row items-center gap-2" onClick={() => handleModalOpen(restaurant)}>
             {restaurant.queues.length > 0 ? (
               <>

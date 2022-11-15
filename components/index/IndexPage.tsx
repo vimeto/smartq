@@ -20,7 +20,7 @@ const IndexPage: React.FC<{
 
   useEffect(() => {
     setRestaurants(restaurantProps);
-    setOpenRestaurantIds(restaurantProps.map(r => r.id));
+    // setOpenRestaurantIds(restaurantProps.map(r => r.id));
   }, [restaurantProps])
 
   const toggleMenuOpen = (id: number) => {
