@@ -2,7 +2,6 @@ import { UserGroup } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useFormContext, useController, Controller } from "react-hook-form";
-import { ActivityLevel, UserWithUserGroups } from "../../lib/types";
 
 export const IntroStep = () => {
   return (
