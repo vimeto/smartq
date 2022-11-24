@@ -6,9 +6,9 @@
   "license": "MIT",
   "author": "",
   "scripts": {
-    "dev": "next",
+    "dev": "NEXT_MANUAL_SIG_HANDLE=true next",
     "build": "next build",
-    "start": "next start -p 8080",
+    "start": "NEXT_MANUAL_SIG_HANDLE=true next start -p 8080",
     "lint": "next lint"
   },
   "dependencies": {
