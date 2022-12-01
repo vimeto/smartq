@@ -43,7 +43,7 @@ export const getIndexPageServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   const today = new Date();
-  const datestring = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+  const datestring = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, "0")}-${(today.getDate()).toString().padStart(2, "0")}`;
 
   const restaurants = await prisma.restaurant.findMany({
     include: {
